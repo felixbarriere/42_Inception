@@ -1,6 +1,6 @@
 FROM 	debian:buster
 
-RUN 	apt update && apt upgrade
+RUN 	apt update -y && apt upgrade -y
 
 RUN 	apt-get -y install wget
 
