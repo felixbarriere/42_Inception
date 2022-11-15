@@ -10,4 +10,6 @@ COPY tools/script.sh /usr/script.sh
 RUN mkdir /var/run/mysqld
 RUN chmod 777 /var /var/run /var/run/mysqld /usr/script.sh
 
-RUN /usr/script.sh
+EXPOSE 3306
+
+CMD ["/bin/bash", "/usr/script.sh"]

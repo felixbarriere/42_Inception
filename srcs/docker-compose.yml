@@ -4,7 +4,9 @@ services:
     container_name: mariadb
     networks:
       - inception            	  # à quel network il appartient
-    build: . 
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
     env_file: .env                
     volumes:
       - mariadb:/var/lib/mysql
@@ -19,7 +21,9 @@ services:
       - inception
     depends_on:        		   # ne pas démarrer NGINX avant WordPress
       - wordpress
-    build: . 
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
     env_file: .env
     ports:
       - "443:443" 		# port qui sera exposé a la machine locale
@@ -31,7 +35,9 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - inception
-    build: .
+    build: 
+      context: requirements/wordpress
+      dockerfile: Dockerfile
     depends_on:    		      # WordPress démarrera uniquement après MariaDB
       - mariadb
     restart: on-failure
@@ -40,14 +46,14 @@ services:
 
 volumes:
   wordpress:
+    driver: local 
     driver_opts:
-      driver: local 
       type: 'none' 			        # aucun type spécifique
       o: 'bind'
       device: '/home/fbarrier/data/wordpress' 	#stockage en local
   mariadb:
+    driver: local
     driver_opts:
-      driver: local
       type: bind 
       o: 'bind'	                                # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
       device: '/home/fbarrier/data/mariadb'	  #stockage en local
