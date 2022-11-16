@@ -2,11 +2,13 @@
 
 if mysql "${SQL_DATABASE}" > /dev/null 2>&1 #</dev/null
 then
+{
 	echo "----------- MariaDB DATABASE already exists---------"
+}
 else
 {
 
-	mysqld
+	mysqld &
 				#sleep 10 #changer avec un while
 
 	while !(mysqladmin ping > /dev/null)
