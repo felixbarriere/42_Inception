@@ -9,6 +9,10 @@ while [ $RETURN -ne 0 ]; do
 	RETURN=$?
 done
 
+echo "---------- Installing WP in path -----------"
+
+wp core download --allow-root --locale=fr_FR --path="/var/www/wordpress"
+
 echo "---------- Wordpress configurating -----------"
 wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost="mariadb" --path='/var/www/wordpress' --config-file="/var/www/wordpress/wp-config.php"
 
