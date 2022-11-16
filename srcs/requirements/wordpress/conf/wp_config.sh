@@ -10,10 +10,13 @@ while [ $RETURN -ne 0 ]; do
 done
 
 echo "---------- Wordpress configurating -----------"
+wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost="mariadb" --path='/var/www/wordpress' --config-file="/var/www/wordpress/wp-config.php"
 
-wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --path='/var/www/wordpress'
-wp core install 	--allow-root --user=$SQL_DATABASE --path='/var/www/wordpress'
-wp user create fbarrier --allow-root --role='default' --user_pass=$WP_PASSWORD --display_name=$WP_USERNAME 
+echo "---------- WP core install -----------"
+wp core install 	--allow-root --user=$SQL_DATABASE --path='/var/www/wordpress/wp-config.php'
+
+echo "---------- WP User Create -----------"
+wp user create fbarrier --allow-root --role='default' --user_pass=$WP_PASSWORD --display_name=$WP_USERNAME --path="/var/www/wordpress/wp-config.php"
 
 if [ -d /run/php ]
 then
