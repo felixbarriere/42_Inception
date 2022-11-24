@@ -11,10 +11,10 @@ done
 
 echo "---------- Installing WP in path -----------"
 
-wp core download --allow-root --locale=fr_FR --path="/var/www/wordpress"
+wp core download --allow-root --locale=fr_FR --path="/var/www/wordpress/wp-config.php"
 
 echo "---------- Wordpress configurating -----------"
-wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost="mariadb" --path='/var/www/wordpress' --config-file="/var/www/wordpress/wp-config.php"
+wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost="mariadb" --config-file="/var/www/wordpress/wp-config.php" --path="/var/www/wordpress/wp-config.php"
 
 echo "---------- WP core install -----------"
 wp core install 	--allow-root --user=$SQL_DATABASE --path='/var/www/wordpress/wp-config.php'
