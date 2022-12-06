@@ -1,11 +1,10 @@
 #!/bin/bash
 
 RETURN=1
-
 while [ $RETURN -ne 0 ]; do
 	echo "---------- wordpress is waiting for MariaDB -----------"
 	sleep 3
-	mysqladmin -u ${SQL_USER} -p${SQL_PASSWORD} -h mariadb ping > /dev/null 2>&1
+	mysqladmin -u ${SQL_ADMIN_USER} -p${SQL_ROOT_PASSWORD} -h mariadb ping > /dev/null 2>&1
 	RETURN=$?
 done
 

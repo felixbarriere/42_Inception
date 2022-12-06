@@ -1,9 +1,13 @@
-/usr/bin/mysql_safe > /dev/null 2>&1 &
+/usr/bin/mysqld_safe & # > /dev/null 2>&1 
 
 RETURN=1
-while [[ RET -ne 0 ]]; do
+while [[ RETURN -ne 0 ]]; do
+	
+	echo "------------ Boucle While mariaDB  -----------"
 	sleep 3
-	mysql -uroot -e "status" > /dev/null 2>&1
+
+	#mysqladmin -uroot ping # > /dev/null 2>&1
+	mysql -uroot -e "status" # > /dev/null 2>&1
 	RETURN=$?
 done
 
