@@ -13,6 +13,8 @@ echo "---------- Installing WP in path -----------"
 
 wp core download --allow-root --locale=fr_FR --path="/var/www/wordpress/wp-config.php"
 
+bash
+
 echo "---------- Wordpress configurating -----------"
 wp config create	--allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost="mariadb" --config-file="/var/www/wordpress/wp-config.php" --path="/var/www/wordpress/wp-config.php"
 

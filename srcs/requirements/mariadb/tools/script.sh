@@ -1,33 +1,31 @@
-if mysql "${SQL_DATABASE}" > /dev/null 2>&1 #</dev/null
-then
-{
-	echo "----------- MariaDB DATABASE already exists---------"
-}
-else
-{
-	mysqld &
-	while !(mysqladmin ping > /dev/null)
-	do 
-		sleep 3
-	done
+/usr/bin/mysql_safe > /dev/null 2>&1 &
+
+RETURN=1
+while [[ RET -ne 0 ]]; do
+	sleep 3
+	mysql -uroot -e "status" > /dev/null 2>&1
+	RETURN=$?
+done
 
 	echo "------------ CREATING DATABASE  -----------"
-	
-	mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\` ;"
+	mysql -uroot -e "CREATE DATABASE ${SQL_DATABASE};"
 
+	echo "------------ CREATING ADMIN USER  -----------"
+	mysql -uroot -e "CREATE USER '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+	mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO \`${SQL_ADMIN_USER}\`@'%' WITH GRANT OPTION ;"
+
+	echo "------------ FLUSH PRIVILEGES ADMIN  -----------"
+	mysql -uroot -e "FLUSH PRIVILEGES;"
+	
 	echo "------------ CREATING USER  -----------"
+	mysql -uroot -e "CREATE USER '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+	mysql -uroot -e "GRANT ALL PRIVILEGES ON ${SQL_DATABASE} TO \`${SQL_USER}\`@'%' WITH GRANT OPTION ;"
 	
-	mysql -u root -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY \`${SQL_PASSWORD}\`;"
-
-	mysql -u root -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-
-	mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-
-	mysql -u root -e "FLUSH PRIVILEGES;"
+	echo "------------ FLUSH PRIVILEGES -----------"
+	mysql -uroot -e "FLUSH PRIVILEGES;"
 	
 	echo "------------ DATABASE CREATED -----------"
 
-	mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
-}
-fi
+	mysqladmin -uroot -p$SQL_ROOT_PASSWORD shutdown
+
 exec mysqld_safe
