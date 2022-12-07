@@ -13,10 +13,10 @@ clean:
 	@${DOCKER_COMPOSE} down
 
 fclean:	
-	@make clean 
-	@sudo docker rmi -f $(docker images -qa) 
+	@make clean
 	@sudo docker system prune -af
 	@sudo rm -rf /home/fbarrier/data
+	@/bin/bash ./srcs/clean_all.sh
 
 .PHONY: all stop clean fclean
 	
