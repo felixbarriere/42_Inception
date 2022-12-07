@@ -12,18 +12,19 @@ while [[ RETURN -ne 0 ]]; do
 done
 
 	echo "------------ CREATING DATABASE  -----------"
-	mysql -uroot -e "CREATE DATABASE ${SQL_DATABASE};"
+	mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 
 	echo "------------ CREATING ADMIN USER  -----------"
-	mysql -uroot -e "CREATE USER '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+	mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 	mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO \`${SQL_ADMIN_USER}\`@'%' WITH GRANT OPTION ;"
 
 	echo "------------ FLUSH PRIVILEGES ADMIN  -----------"
 	mysql -uroot -e "FLUSH PRIVILEGES;"
 	
 	echo "------------ CREATING USER  -----------"
-	mysql -uroot -e "CREATE USER '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
-	mysql -uroot -e "GRANT ALL PRIVILEGES ON ${SQL_DATABASE} TO \`${SQL_USER}\`@'%' WITH GRANT OPTION ;"
+	mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+	echo "------------ CREATING USER 2  -----------"
+	mysql -uroot -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' WITH GRANT OPTION ;"
 	
 	echo "------------ FLUSH PRIVILEGES -----------"
 	mysql -uroot -e "FLUSH PRIVILEGES;"
