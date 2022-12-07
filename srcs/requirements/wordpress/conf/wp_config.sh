@@ -10,17 +10,16 @@ done
 
 echo "---------- Installing WP in path -----------"
 
-wp core download --allow-root #--path="/var/www/html"
+wp core download --allow-root --path="/var/www/html"
 
 echo "---------- Wordpress configurating -----------"
-wp config create --allow-root --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost="mariadb"  #--path="/var/www/html"
-#--config-file="/var/www/html/wp-config.php"
+wp config create --allow-root --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost="mariadb"  --config-file="/var/www/html/wp-config.php" --path="/var/www/html" 
 
 echo "---------- WP core install -----------"
-wp core install --allow-root --user="${SQL_USER}" #--path="/var/www/html"
+wp core install --allow-root --url="${WP_URL}" --title="${WP_TITLE}" --admin_user="${WP_USERNAME}" --admin_email="${WP_ADMIN_EMAIL}" --user="${SQL_USER}" --path="/var/www/html"
 
 echo "---------- WP User Create -----------"
-wp user create fbarrier --allow-root --role='default' --user_pass="${WP_PASSWORD}" --display_name="${WP_USERNAME}" #--path="/var/www/html"
+wp user create fbarrier --allow-root --role='default' --user_pass="${WP_PASSWORD}" --display_name="${WP_USERNAME}" --path="/var/www/html"
 
 if [ -d /run/php ]
 then
