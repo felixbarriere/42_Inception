@@ -15,7 +15,7 @@ done
 	mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 
 	echo "------------ CREATING ADMIN USER  -----------"
-	mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+	mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ADMIN_PASSWORD}';"
 	mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO \`${SQL_ADMIN_USER}\`@'%' WITH GRANT OPTION ;"
 
 	echo "------------ FLUSH PRIVILEGES ADMIN  -----------"

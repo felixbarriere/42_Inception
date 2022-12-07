@@ -14,7 +14,7 @@ clean:
 
 fclean:	
 	@make clean 
-#	@sudo docker rmi -f $(docker images -qa) 
+	@sudo docker rmi -f $(docker images -qa) 
 	@sudo docker system prune -af
 	@sudo rm -rf /home/fbarrier/data
 

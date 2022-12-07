@@ -4,7 +4,7 @@ RETURN=1
 while [ $RETURN -ne 0 ]; do
 	echo "---------- wordpress is waiting for MariaDB -----------"
 	sleep 3
-	mysqladmin -u ${SQL_ADMIN_USER} -p${SQL_ROOT_PASSWORD} -h mariadb ping > /dev/null 2>&1
+	mysqladmin -u ${SQL_ADMIN_USER} -p${SQL_ADMIN_PASSWORD} -h mariadb ping > /dev/null 2>&1
 	RETURN=$?
 done
 
@@ -13,7 +13,7 @@ echo "---------- Installing WP in path -----------"
 wp core download --allow-root --path="/var/www/html"
 
 echo "---------- Wordpress configurating -----------"
-wp config create --allow-root --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost="mariadb"  --config-file="/var/www/html/wp-config.php" --path="/var/www/html" 
+wp config create --allow-root --dbname=${SQL_DATABASE} --dbuser=${SQL_USER} --dbpass=${SQL_PASSWORD} --dbhost="mariadb" --config-file="/var/www/html/wp-config.php" --path="/var/www/html" 
 
 echo "---------- WP core install -----------"
 wp core install --allow-root --url="${WP_URL}" --title="${WP_TITLE}" --admin_user="${WP_USERNAME}" --admin_email="${WP_ADMIN_EMAIL}" --user="${SQL_USER}" --path="/var/www/html"
