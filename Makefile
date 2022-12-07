@@ -1,7 +1,13 @@
 DOCKER_COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
+DATA_DIR = /home/fbarrier/data/
 
 all:	
-	@sudo mkdir -p /home/fbarrier/data/wordpress /home/fbarrier/data/mariadb 
+	@sudo mkdir -p ${DATA_DIR}wordpress ${DATA_DIR}mariadb 
+	@${DOCKER_COMPOSE} build
+	@${DOCKER_COMPOSE} up -d
+
+wd:	
+	@sudo mkdir -p ${DATA_DIR}wordpress ${DATA_DIR}mariadb 
 	@${DOCKER_COMPOSE} build 
 	@${DOCKER_COMPOSE} up
 
@@ -15,7 +21,7 @@ clean:
 fclean:	
 	@make clean
 	@sudo docker system prune -af
-	@sudo rm -rf /home/fbarrier/data
+	@sudo rm -rf ${DATA_DIR}
 	@/bin/bash ./srcs/clean_all.sh
 
 .PHONY: all stop clean fclean
