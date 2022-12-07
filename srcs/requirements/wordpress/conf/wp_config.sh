@@ -21,10 +21,15 @@ wp core install --allow-root --url="${WP_URL}" --title="${WP_TITLE}" --admin_use
 echo "---------- WP User Create -----------"
 wp user create fbarrier --allow-root --role='default' --user_pass="${WP_PASSWORD}" --display_name="${WP_USERNAME}" --path="/var/www/html"
 
-if [ -d /run/php ]
+echo "---------- Test -----------"
+
+if [  /run/php ]
 then
-    mkdir -p /run/php/php7.3
+	echo "---------- /run/php n existe pas -----------"
+    mkdir -p /run/php 755 root root
+#    mkdir -p /run/php
 fi
 
 exec /usr/sbin/php-fpm7.3 -F
 
+echo "---------- test fin -----------"

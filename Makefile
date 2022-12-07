@@ -18,5 +18,5 @@ fclean:
 	@sudo docker system prune -af
 	@sudo rm -rf /home/fbarrier/data
 
-.PHONY: allstop clean fclean
+.PHONY: all stop clean fclean
 	
