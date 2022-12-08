@@ -15,6 +15,7 @@ done
 echo "------------ CREATING DATABASE  -----------"
 mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 
+
 echo "------------ CREATING ADMIN USER  -----------"
 mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_ADMIN_USER}'@'%' IDENTIFIED BY '${SQL_ADMIN_PASSWORD}';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO \`${SQL_ADMIN_USER}\`@'%' WITH GRANT OPTION ;"
@@ -25,8 +26,12 @@ mysql -uroot -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQ
 mysql -uroot -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' WITH GRANT OPTION ;"
 mysql -uroot -e "FLUSH PRIVILEGES;"
 
+mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ADMIN_PASSWORD}';"
+# mysql -e "FLUSH PRIVILEGES;"
+
 echo "------------ DATABASE CREATED -----------"
 
+# mysqladmin -uroot shutdown
 mysqladmin -uroot -p${SQL_ADMIN_PASSWORD} shutdown
 
 exec mysqld_safe

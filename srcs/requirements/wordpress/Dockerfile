@@ -14,7 +14,7 @@ RUN	chown -R root:root /var/www/html
 
 # ------------------Copie des fichiers de configuration--------------
 
-COPY conf/wp_config.sh /etc/wordpress/wp_config.sh
+COPY tools/wp_config.sh /etc/wordpress/wp_config.sh
 RUN chmod 775 /etc/wordpress/wp_config.sh
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
