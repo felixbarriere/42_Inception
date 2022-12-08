@@ -23,6 +23,7 @@ fclean:
 	@sudo docker system prune -af
 	@sudo rm -rf ${DATA_DIR}
 	@/bin/bash ./srcs/clean_all.sh
+	@rm srcs/requirements/mariadb/tools/.sql_config_done
 
 .PHONY: all stop clean fclean
 	
